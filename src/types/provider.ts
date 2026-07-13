@@ -1,8 +1,7 @@
-import type {ProviderResult} from '../models/result';
-
+import type { ProviderResult } from '../models/result'
 
 export interface Provider {
-  name: string;
+  name: string
 
-  check(name: string): Promise<ProviderResult>;
+  check(name: string): Promise<ProviderResult>
 }
