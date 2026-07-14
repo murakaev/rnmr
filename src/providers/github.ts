@@ -31,6 +31,12 @@ export class GitHubProvider implements Provider {
         repo.name.toLowerCase() === name.toLowerCase() ? 'TAKEN' : 'SIMILAR',
     }))
 
+    const uniqueMatches = Array.from(
+      new Map(
+        matches.map((match) => [match.name.toLowerCase(), match])
+      ).values()
+    )
+
     const status: Status = matches.some((match) => match.status === 'TAKEN')
       ? 'TAKEN'
       : matches.length > 0
@@ -40,7 +46,7 @@ export class GitHubProvider implements Provider {
     return {
       provider: this.name,
       status,
-      matches,
+      matches: uniqueMatches,
     }
   }
 }

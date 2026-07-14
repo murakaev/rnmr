@@ -1,11 +1,12 @@
-import 'dotenv/config'
-
+import { HTTPClient } from './services/http'
+import { GitHubProvider } from './providers/github'
+import { Checker } from './core/checker'
 import { createBot } from './bot/bot'
 
-const token = process.env.BOT_TOKEN!
+const http = new HTTPClient()
 
-const bot = createBot(token)
+const checker = new Checker([new GitHubProvider(http)])
+
+const bot = createBot(checker)
 
 bot.launch()
-
-console.log('Bot started')
