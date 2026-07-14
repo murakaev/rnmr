@@ -3,9 +3,22 @@ import { ProviderResult } from '../../models/result'
 export function formatResults(results: ProviderResult[]): string {
   let message = ''
 
+  message += '🔍 rnmr\n\n'
+
   for (const result of results) {
-    message += `📦 ${result.provider}\n`
-    message += `Status: ${result.status}\n`
+    message += `👀 ${result.provider}\n`
+
+    switch (result.status) {
+      case 'AVAILABLE':
+        message += '✅ Available\n'
+        break
+      case 'TAKEN':
+        message += '❌ Taken\n'
+        break
+      case 'SIMILAR':
+        message += '⚠️ Similar\n'
+        break
+    }
 
     if (result.matches.length > 0) {
       message += '\nMatches:\n'
