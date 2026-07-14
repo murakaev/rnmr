@@ -1,0 +1,39 @@
+{
+  "name": "rnmr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/murakaev/rnmr.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/murakaev/rnmr/issues"
+  },
+  "homepage": "https://github.com/murakaev/rnmr#readme",
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "prettier": "^3.9.5",
+    "tsx": "^4.23.1",
+    "typescript": "^7.0.2"
+  },
+  "allowScripts": {
+    "esbuild@0.28.1": true,
+    "fsevents@2.3.3": true
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "telegraf": "^4.16.3"
+  }
+}
