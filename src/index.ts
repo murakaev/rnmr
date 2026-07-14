@@ -1,7 +1,7 @@
-import { HTTPClient } from './services/http'
-import { GitHubProvider } from './providers/github'
-import { Checker } from './core/checker'
 import { createBot } from './bot/bot'
+import { Checker } from './core/checker'
+import { GitHubProvider } from './providers/github'
+import { HTTPClient } from './services/http'
 
 const http = new HTTPClient()
 
