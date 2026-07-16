@@ -18,6 +18,8 @@ export function registerCheckCommand(bot: Telegraf, checker: Checker): void {
       return
     }
 
+    console.log(`user: ${ctx.message.from.id} checked: ${name}`)
+
     try {
       const result = await checker.check(name)
       await ctx.reply(formatResults(result))
