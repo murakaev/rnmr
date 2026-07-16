@@ -8,23 +8,27 @@ export function formatResults(results: ProviderResult[]): string {
   for (const result of results) {
     message += `👀 ${result.provider}\n`
 
-    switch (result.status) {
-      case 'AVAILABLE':
-        message += '✅ Available\n'
-        break
-      case 'TAKEN':
-        message += '❌ Taken\n'
-        break
-      case 'SIMILAR':
-        message += '⚠️ Similar\n'
-        break
-    }
+    if (result.error) {
+      message += `⚠️ Error: ${result.error}\n\n`
+    } else {
+      switch (result.status) {
+        case 'AVAILABLE':
+          message += '✅ Available\n'
+          break
+        case 'TAKEN':
+          message += '❌ Taken\n'
+          break
+        case 'SIMILAR':
+          message += '⚠️ Similar\n'
+          break
+      }
 
-    if (result.matches.length > 0) {
-      message += '\nMatches:\n'
+      if (result.matches.length > 0) {
+        message += '\nMatches:\n'
 
-      for (const match of result.matches) {
-        message += `• ${match.name}\n`
+        for (const match of result.matches) {
+          message += `• ${match.name}\n`
+        }
       }
     }
 
