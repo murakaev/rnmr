@@ -15,3 +15,6 @@ const checker = new Checker([new GitHubProvider(http)])
 const bot = createBot(checker, process.env.BOT_TOKEN!)
 
 bot.launch()
+
+process.once('SIGINT', () => bot.stop('SIGINT'))
+process.once('SIGTERM', () => bot.stop('SIGTERM'))
