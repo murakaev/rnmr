@@ -11,6 +11,13 @@ export function registerCheckCommand(bot: Telegraf, checker: Checker): void {
       return
     }
 
+    if (!/^[a-zA-Z0-9-_.]+$/.test(name)) {
+      await ctx.reply(
+        'Invalid name. Only letters, numbers, -, _ and . are allowed.'
+      )
+      return
+    }
+
     try {
       const result = await checker.check(name)
       await ctx.reply(formatResults(result))
