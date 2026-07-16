@@ -1,15 +1,23 @@
+import { ProviderResult } from '../models/result'
 import type { Provider } from '../types/provider'
 
 export class Checker {
   constructor(private providers: Provider[]) {}
 
-  async check(name: string) {
-    const results = []
-
-    for (const provider of this.providers) {
-      results.push(await provider.check(name))
-    }
-
-    return results
+  async check(name: string): Promise<ProviderResult[]> {
+    return Promise.all(
+      this.providers.map(async (provider) => {
+        try {
+          return await provider.check(name)
+        } catch (error) {
+          return {
+            provider: provider.name,
+            status: 'AVAILABLE' as const,
+            matches: [],
+            error: error instanceof Error ? error.message : 'Unknown error',
+          }
+        }
+      })
+    )
   }
 }
