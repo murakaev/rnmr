@@ -1,4 +1,4 @@
-import type { ProviderResult } from '../models/result'
+import type { ProviderResult } from './result'
 
 export interface Provider {
   name: string

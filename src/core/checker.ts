@@ -1,5 +1,5 @@
+import type { Provider } from '../models/provider'
 import { ProviderResult } from '../models/result'
-import type { Provider } from '../types/provider'
 
 export class Checker {
   constructor(private providers: Provider[]) {}

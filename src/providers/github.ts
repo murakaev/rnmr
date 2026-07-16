@@ -1,6 +1,6 @@
+import type { Provider } from '../models/provider'
 import type { Match, ProviderResult, Status } from '../models/result'
 import { HTTPClient } from '../services/http'
-import type { Provider } from '../types/provider'
 
 const SEARCH_URL = 'https://api.github.com/search/repositories'
 
