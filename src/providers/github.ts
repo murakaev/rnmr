@@ -13,7 +13,10 @@ interface GitHubResponse {
 export class GitHubProvider implements Provider {
   name = 'GitHub'
 
-  constructor(private client: HTTPClient) {}
+  constructor(
+    private client: HTTPClient,
+    private token?: string
+  ) {}
 
   async check(name: string): Promise<ProviderResult> {
     const params = new URLSearchParams({
@@ -21,8 +24,17 @@ export class GitHubProvider implements Provider {
       per_page: '10',
     })
 
+    const headers: Record<string, string> = {
+      Accept: 'application/vnd.github+json',
+    }
+
+    if (this.token) {
+      headers.Authorization = `Bearer ${this.token}`
+    }
+
     const data = await this.client.get<GitHubResponse>(
-      `${SEARCH_URL}?${params}`
+      `${SEARCH_URL}?${params}`,
+      headers
     )
 
     const matches: Match[] = data.items.map((repo) => ({
