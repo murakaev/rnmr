@@ -7,11 +7,16 @@ export function registerCheckCommand(bot: Telegraf, checker: Checker): void {
     const name = ctx.message.text.split(' ')[1]
 
     if (!name) {
-      ctx.reply('Usage: /check <name>')
+      await ctx.reply('Usage: /check <name>')
+      return
     }
 
-    const result = await checker.check(name)
-
-    await ctx.reply(formatResults(result))
+    try {
+      const result = await checker.check(name)
+      await ctx.reply(formatResults(result))
+    } catch (error) {
+      console.error('Check failed:', error)
+      await ctx.reply('An error occurred while checking.')
+    }
   })
 }
