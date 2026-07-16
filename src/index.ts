@@ -1,6 +1,6 @@
 import { createBot } from './bot/bot'
 import { Checker } from './core/checker'
-import { GitHubProvider } from './providers/github'
+import { createProviders } from './providers'
 import { HTTPClient } from './services/http'
 
 if (!process.env.BOT_TOKEN) {
@@ -10,7 +10,7 @@ if (!process.env.BOT_TOKEN) {
 
 const http = new HTTPClient()
 
-const checker = new Checker([new GitHubProvider(http)])
+const checker = new Checker(createProviders(http))
 
 const bot = createBot(checker, process.env.BOT_TOKEN!)
 
