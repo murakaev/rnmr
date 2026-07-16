@@ -1,7 +1,8 @@
+import 'dotenv/config'
 import type { Provider } from '../models/provider'
 import { HTTPClient } from '../services/http'
 import { GitHubProvider } from './github'
 
 export function createProviders(client: HTTPClient): Provider[] {
-  return [new GitHubProvider(client)]
+  return [new GitHubProvider(client, process.env.GITHUB_TOKEN)]
 }
