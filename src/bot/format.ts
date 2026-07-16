@@ -1,4 +1,4 @@
-import { ProviderResult } from '../../models/result'
+import { ProviderResult } from '../models/result'
 
 export function formatResults(results: ProviderResult[]): string {
   let message = ''

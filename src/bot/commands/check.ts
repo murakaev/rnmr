@@ -1,6 +1,6 @@
 import { Telegraf } from 'telegraf'
 import { Checker } from '../../core/checker'
-import { formatResults } from '../formatters/formatter'
+import { formatResults } from '../format'
 
 export function registerCheckCommand(bot: Telegraf, checker: Checker): void {
   bot.command('check', async (ctx) => {
