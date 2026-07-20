@@ -1,9 +1,15 @@
 import { Telegraf } from 'telegraf'
 import { Checker } from '../../core/checker'
 import { formatResults } from '../format'
+import { isRateLimited } from '../rateLimit'
 
 export function registerCheckCommand(bot: Telegraf, checker: Checker): void {
   bot.command('check', async (ctx) => {
+    if (isRateLimited(ctx.from.id)) {
+      await ctx.reply('Wait 5 seconds before another check')
+      return
+    }
+
     const name = ctx.message.text.split(' ')[1]
 
     if (!name) {
@@ -18,7 +24,7 @@ export function registerCheckCommand(bot: Telegraf, checker: Checker): void {
       return
     }
 
-    console.log(`user: ${ctx.message.from.id} checked: ${name}`)
+    console.log(`user: ${ctx.from.id} checked: ${name}`)
 
     try {
       const result = await checker.check(name)
