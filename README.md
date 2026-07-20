@@ -1,12 +1,14 @@
 # rnmr
 
-Telegram bot that checks name availability across platforms — start with GitHub, more providers coming.
+Telegram bot that checks name availability across platforms — GitHub, npm, PyPI, and more.
 
 ## Features
 
 - 🔍 Check if a name is taken, similar, or available
-- 📦 GitHub search provider (npm, PyPI, domains planned)
+- 📦 Providers: GitHub, npm, PyPI (domains planned)
 - ⚡ Parallel provider checks with isolated error handling
+- 🚦 Per-user rate limiting
+- ✅ Unit tested (Vitest)
 
 ## Usage
 
@@ -45,6 +47,12 @@ cp .env.example .env
 ```bash
 npm run dev    # development
 npm run build && npm start   # production
+```
+
+### 4. Test
+
+```bash
+npm test
 ```
 
 ## License
