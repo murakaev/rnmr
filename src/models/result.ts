@@ -12,7 +12,7 @@ export interface ProviderResult {
   error?: string
 }
 
-export function BuildProviderResult(
+export function buildProviderResult(
   provider: string,
   searchedName: string,
   candidateNames: string[]

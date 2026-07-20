@@ -1,5 +1,5 @@
 import type { Provider } from '../models/provider'
-import { BuildProviderResult, type ProviderResult } from '../models/result'
+import { buildProviderResult, type ProviderResult } from '../models/result'
 import { HTTPClient } from '../services/http'
 
 const SEARCH_URL = 'https://api.github.com/search/repositories'
@@ -18,7 +18,7 @@ export class GitHubProvider implements Provider {
 
   async check(name: string): Promise<ProviderResult> {
     const candidates = await this.search(name)
-    return BuildProviderResult(this.name, name, candidates)
+    return buildProviderResult(this.name, name, candidates)
   }
 
   private async search(name: string): Promise<string[]> {
