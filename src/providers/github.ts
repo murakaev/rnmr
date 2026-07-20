@@ -1,13 +1,11 @@
 import type { Provider } from '../models/provider'
-import type { Match, ProviderResult, Status } from '../models/result'
+import { BuildProviderResult, type ProviderResult } from '../models/result'
 import { HTTPClient } from '../services/http'
 
 const SEARCH_URL = 'https://api.github.com/search/repositories'
 
 interface GitHubResponse {
-  items: {
-    name: string
-  }[]
+  items: { name: string }[]
 }
 
 export class GitHubProvider implements Provider {
@@ -19,46 +17,22 @@ export class GitHubProvider implements Provider {
   ) {}
 
   async check(name: string): Promise<ProviderResult> {
-    const params = new URLSearchParams({
-      q: `${name} in:name`,
-      per_page: '10',
-    })
+    const candidates = await this.search(name)
+    return BuildProviderResult(this.name, name, candidates)
+  }
 
+  private async search(name: string): Promise<string[]> {
+    const params = new URLSearchParams({ q: `${name} in:name`, per_page: '10' })
     const headers: Record<string, string> = {
       Accept: 'application/vnd.github+json',
     }
-
-    if (this.token) {
-      headers.Authorization = `Bearer ${this.token}`
-    }
+    if (this.token) headers.Authorization = `Bearer ${this.token}`
 
     const data = await this.client.get<GitHubResponse>(
       `${SEARCH_URL}?${params}`,
       headers
     )
 
-    const matches: Match[] = data.items.map((repo) => ({
-      name: repo.name,
-      status:
-        repo.name.toLowerCase() === name.toLowerCase() ? 'TAKEN' : 'SIMILAR',
-    }))
-
-    const uniqueMatches = Array.from(
-      new Map(
-        matches.map((match) => [match.name.toLowerCase(), match])
-      ).values()
-    )
-
-    const status: Status = matches.some((match) => match.status === 'TAKEN')
-      ? 'TAKEN'
-      : matches.length > 0
-        ? 'SIMILAR'
-        : 'AVAILABLE'
-
-    return {
-      provider: this.name,
-      status,
-      matches: uniqueMatches,
-    }
+    return data.items.map((repo) => repo.name)
   }
 }
