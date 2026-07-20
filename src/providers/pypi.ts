@@ -1,8 +1,8 @@
+import { Provider } from '../models/provider'
+import { buildProviderResult, ProviderResult } from '../models/result'
 import { HTTPClient } from '../services/http'
-import { Provider } from './provider'
-import { buildProviderResult, ProviderResult } from './result'
 
-export class PyPiProvider implements Provider {
+export class PyPIProvider implements Provider {
   name = 'PyPI'
 
   constructor(private client: HTTPClient) {}
