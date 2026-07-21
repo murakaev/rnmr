@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import type { Provider } from '../models/provider'
 import { Checker } from './checker'
 
@@ -50,5 +50,44 @@ describe('Checker', () => {
     await new Checker([slow, fast]).check('foo')
 
     expect(calls).toEqual(['fast', 'slow'])
+  })
+
+  it('uses cache for exactly same checks', async () => {
+    const checkFn = vi.fn().mockResolvedValue({
+      provider: 'Test',
+      status: 'AVAILABLE' as const,
+      matches: [],
+    })
+
+    const provider: Provider = {
+      name: 'Test',
+      check: checkFn,
+    }
+
+    const checker = new Checker([provider])
+
+    await checker.check('foo')
+    await checker.check('Foo')
+    await checker.check('FOO')
+
+    expect(checkFn.mock.calls.length).toBe(1)
+  })
+
+  it('expires cache after TTL', async () => {
+    const checkFn = vi.fn().mockResolvedValue({
+      provider: 'Test',
+      status: 'AVAILABLE' as const,
+      matches: [],
+    })
+
+    const provider: Provider = { name: 'Test', check: checkFn }
+
+    const checker = new Checker([provider], 50)
+
+    await checker.check('foo')
+    await new Promise((resolve) => setTimeout(resolve, 60))
+    await checker.check('foo')
+
+    expect(checkFn.mock.calls.length).toBe(2)
   })
 })
