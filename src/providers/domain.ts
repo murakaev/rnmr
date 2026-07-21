@@ -1,5 +1,5 @@
 import { Provider } from '../models/provider'
-import { buildProviderResult, ProviderResult } from '../models/result'
+import { buildProviderResult, Match, ProviderResult } from '../models/result'
 import { HTTPClient } from '../services/http'
 
 const BOOTSTRAP_URL = 'https://data.iana.org/rdap/dns.json'
@@ -22,7 +22,15 @@ export class DomainProvider implements Provider {
   async check(name: string): Promise<ProviderResult> {
     await this.ensureBootstrap()
     const takenDomains = await this.resolveDomains(name)
-    return buildProviderResult(this.name, name, takenDomains)
+    const matches: Match[] = takenDomains.map((domain) => ({
+      name: domain,
+      status: 'TAKEN' as const,
+    }))
+    return {
+      provider: this.name,
+      status: takenDomains.length > 0 ? 'TAKEN' : 'AVAILABLE',
+      matches,
+    }
   }
 
   private async ensureBootstrap(): Promise<void> {
