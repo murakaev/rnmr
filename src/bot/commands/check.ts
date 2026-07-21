@@ -28,7 +28,7 @@ export function registerCheckCommand(bot: Telegraf, checker: Checker): void {
 
     try {
       const result = await checker.check(name)
-      await ctx.reply(formatResults(result))
+      await ctx.reply(formatResults(name, result), { parse_mode: 'MarkdownV2' })
     } catch (error) {
       console.error('Check failed:', error)
       await ctx.reply('An error occurred while checking.')
