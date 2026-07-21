@@ -24,7 +24,7 @@ export function registerCheckCommand(bot: Telegraf, checker: Checker): void {
       return
     }
 
-    console.log(`user: ${ctx.from.id} checked: ${name}`)
+    console.log(`user ${ctx.from.id} checked: ${name}`)
 
     try {
       const result = await checker.check(name)

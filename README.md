@@ -5,8 +5,8 @@ Telegram bot that checks name availability across platforms — GitHub, npm, PyP
 ## Features
 
 - 🔍 Check if a name is taken, similar, or available
-- 📦 Providers: GitHub, npm, PyPI (domains planned)
-- ⚡ Parallel provider checks with isolated error handling
+- 📦 Providers: GitHub, npm, PyPI, Domains (RDAP)
+- ⚡ Parallel checks, per-name caching (10 min TTL)
 - 🚦 Per-user rate limiting
 - ✅ Unit tested (Vitest)
 
