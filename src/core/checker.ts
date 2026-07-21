@@ -18,7 +18,7 @@ export class Checker {
     const cached = this.cache.get(key)
 
     if (cached && now < cached.expires) {
-      console.log('Used cache!!!')
+      console.log(`Cache hit: ${key}`)
       return cached.result
     }
 
