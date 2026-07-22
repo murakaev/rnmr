@@ -1,10 +1,7 @@
 import { Match, ProviderResult, Status } from '../models/result'
+import { escapeMarkdown } from './markdown'
 
-export function escapeMarkdown(text: string): string {
-  return text.replace(/[_*[\]()~`>#+\-=|{}.!]/g, '\\$&')
-}
-
-export function statusEmoji(status: Status): string {
+function statusEmoji(status: Status): string {
   switch (status) {
     case 'AVAILABLE':
       return '✅'
@@ -18,7 +15,7 @@ export function statusEmoji(status: Status): string {
   }
 }
 
-export function formatMatches(matches: Match[]): string {
+function formatMatches(matches: Match[]): string {
   const names = matches.map((m) => escapeMarkdown(m.name))
   const preview = names.slice(0, 3)
   const remaining = names.length - preview.length
